@@ -19,21 +19,25 @@ export default class App {
 			"thf2", "thf3", "thf4", "trk1", "wmg1", "wmg2", "wmg3", "wmg4", "wmn1", "wmn2",
 			"wmn3", "wnv1", "wnv2", "wnv3", "wnv4", "ybo1", "ygr1", "zph1", "amg1",
 		];
-		console.log(this.persos, citations);
-		var app = document.getElementById("app");
-		var timeout = 0;
-		app.addEventListener("mousemove", e => {
-			//console.log(timeout, e.timeStamp);
-			if (e.timeStamp < timeout) {
-				return;
-			}
-			if (e.buttons === 1 || e.shiftKey === true) {
-				var idx = Math.floor(Math.random() * this.persos.length);
-				var image = this.persos[idx];
-				app.appendChild(this.html_Perso(image, e.clientX, e.clientY));
-				timeout = e.timeStamp + Math.random() * 200 + 0;
+		var app=document.getElementById("app");
+		var perso = this.html_Perso("man1");
+		app.appendChild(perso);
+
+		perso.addEventListener("click", e=>{
+			if(e.shiftKey===true){
+				console.log("ouch!!!");
+
+			}else{
+				console.log("Bonjours");
 			}
 		});
+		app.addEventListener("mousemove",e=>{
+			perso.style.left=e.clientX+"px";
+			perso.style.top=e.clientY+"px";
+
+		});
+		//perso.innerHTML="test";
+		
 	}
 	/**
 	 * Module qui retourne un élément représentant un personnage
@@ -46,19 +50,20 @@ export default class App {
 	 * @returns HTMLElement
 	 */
 	static html_Perso(nom, x, y) {
-		var perso = document.createElement("div");
-		perso.classList.add("perso");
-		perso.style.left = (x + Math.floor(Math.random() * 32) - 16) + "px";
-		perso.style.top = (y + Math.floor(Math.random() * 32) - 16) + "px";
-		perso.style.backgroundImage = "url(images/last-guardian-sprites/" + nom + ".png)";
-		perso.style.backgroundPositionX = Math.floor(Math.random() * 4) * -32 + "px";
-		perso.style.backgroundPositionY = Math.floor(Math.random() * 2) * -32 + "px";
-		var bulle = document.createElement("div");
-		perso.appendChild(bulle);
-		var idxCitation = Math.floor(Math.random() * citations.length);
-		bulle.innerHTML = citations[idxCitation];
-		return perso;
+		//instruction cachée;
+		//var nom="kin1";
+		var resultat=document.createElement("div");
+		resultat.classList.add("perso");
+		resultat.setAttribute("id",nom);
+		resultat.style.backgroundImage=
+		"url(images/last-guardian-sprites/"+nom+".png)";
+		resultat.style.width="32px";
+		resultat.style.height="32px";
+		resultat.style.backgroundPositionX="32px";
+		resultat.style.backgroundPositionY="32px";
+		return resultat;
 	}
+	
 	/**
 	 * Méthode qui permet d'attendre le chargement de la page avant d'éxécuter le script principal
 	 * @returns {Promise} La promesse qui sera résolue après chargement

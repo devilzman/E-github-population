@@ -36,6 +36,8 @@
 }
 .perso:hover {
 	z-index: 100;
+
+	cursor: none;
 }
 .perso:not(:hover) > div {
 	opacity:0;
